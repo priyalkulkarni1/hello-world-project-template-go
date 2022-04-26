@@ -9,7 +9,7 @@ import (
 	"hello-world-project-template-go/app"
 )
 
-//spinning up two different workers for two different tasks
+//There are multiple activities is being done by the same worker
 
 func main() {
 	// Create the client object just once per process
@@ -19,24 +19,17 @@ func main() {
 	}
 	defer c.Close()
 
-	//This worker is for "Hello String!"
 	// This worker hosts both Workflow and Activity functions
 	w := worker.New(c, app.GreetingTaskQueue, worker.Options{})
+	//These calls are for "Hello String!"
 	w.RegisterWorkflow(app.GreetingWorkflow)
 	w.RegisterActivity(app.ComposeGreeting)
+	//These calls are for "Insert Single document into MongoDB"
+	w.RegisterWorkflow(app.MongoConnectionWorkflow)
+	w.RegisterActivity(app.MongoSingleInsert)
+
 	// Start listening to the Task Queue
 	err = w.Run(worker.InterruptCh())
-	if err != nil {
-		log.Fatalln("unable to start Worker", err)
-	}
-
-	//This worker is for "Insert Single document into MongoDB"
-	// This worker hosts both Workflow and Activity functions
-	w1 := worker.New(c, app.InsertDocTaskQueue, worker.Options{})
-	w1.RegisterWorkflow(app.MongoConnectionWorkflow)
-	w1.RegisterActivity(app.MongoSingleInsert)
-	// Start listening to the Task Queue
-	err = w1.Run(worker.InterruptCh())
 	if err != nil {
 		log.Fatalln("unable to start Worker", err)
 	}
