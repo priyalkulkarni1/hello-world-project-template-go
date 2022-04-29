@@ -15,7 +15,9 @@ A new database called "QuickStart" is created. Then a collection called "Podcast
 ## Steps to run Program
 1) You need a Temporal service running. I am using [Docker-Compose](https://docs.temporal.io/docs/clusters/quick-install/#docker-compose) to run my App locally.
    When the Temporal Cluster is running, the Temporal Web UI becomes available in your [Browser](http://localhost:8088/namespaces/default/workflows?range=last-30-days&status=ALL)
+   
 2) You need a MongoDB Connection setup locally. I am using [MongoDB Compass](https://www.mongodb.com/products/compass) to run my App locally.
+
 3) Run the following command to start the worker
 ```
 go run hello-world-project-template-go/worker/main.go
@@ -30,9 +32,13 @@ Two common ways to introduce errors and test Temporal's behaviour are as follows
 Unlike many modern applications that require complex leader election processes and external databases to handle failure, Temporal automatically preserves the state of your Workflow even if the server is down. You can easily test this by following these steps (again, make sure your Worker is stopped so your Workflow doesn't finish):
 
 1)Start the Workflow again.
+
 2)Verify the Workflow is running in the UI.
+
 3)Shut down the Temporal server by either using 'Ctrl c' or via the Docker dashboard.
+
 4)After the Temporal server has stopped, restart it and visit the UI.
+
 5)Your Workflow is still there!
 
 ### Activity Error
