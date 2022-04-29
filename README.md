@@ -24,3 +24,16 @@ go run hello-world-project-template-go/worker/main.go
 ```
 go run hello-world-project-template-go/starter/main.go
 ```
+## Failure Simulation
+Two common ways to introduce errors and test Temporal's behaviour are as follows.
+### Server Crash
+Unlike many modern applications that require complex leader election processes and external databases to handle failure, Temporal automatically preserves the state of your Workflow even if the server is down. You can easily test this by following these steps (again, make sure your Worker is stopped so your Workflow doesn't finish):
+
+1)Start the Workflow again.
+2)Verify the Workflow is running in the UI.
+3)Shut down the Temporal server by either using 'Ctrl c' or via the Docker dashboard.
+4)After the Temporal server has stopped, restart it and visit the UI.
+5)Your Workflow is still there!
+
+### Activity Error
+We simulate a bug in the Activity function. Please check [Activity.go](https://github.com/priyalkulkarni1/hello-world-project-template-go/blob/master/activity.go). Comments include simulated error.
