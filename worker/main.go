@@ -21,11 +21,9 @@ func main() {
 
 	// This worker hosts both Workflow and Activity functions
 	w := worker.New(c, app.GreetingTaskQueue, worker.Options{})
-	//These calls are for "Hello String!"
+	//Register the workflow and both the activites
 	w.RegisterWorkflow(app.GreetingWorkflow)
 	w.RegisterActivity(app.ComposeGreeting)
-	//These calls are for "Insert Single document into MongoDB"
-	w.RegisterWorkflow(app.MongoConnectionWorkflow)
 	w.RegisterActivity(app.MongoSingleInsert)
 
 	// Start listening to the Task Queue

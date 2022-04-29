@@ -18,7 +18,7 @@ func main() {
 	}
 	defer c.Close()
 
-	//Start workflow for "Hello String!"
+	//Start workflow for "Hello String!" and InsertOneDocument
 	options := client.StartWorkflowOptions{
 		ID:        "greeting-workflow",
 		TaskQueue: app.GreetingTaskQueue,
@@ -34,24 +34,6 @@ func main() {
 		log.Fatalln("unable to get Workflow result", err)
 	}
 	printResults(greeting, we.GetID(), we.GetRunID())
-
-	//Start workflow for InsertOneDocument
-
-	options1 := client.StartWorkflowOptions{
-		ID:        "InsertDoc-workflow",
-		TaskQueue: app.InsertDocTaskQueue,
-	}
-
-	we1, err := c.ExecuteWorkflow(context.Background(), options1, app.MongoConnectionWorkflow)
-	if err != nil {
-		log.Fatalln("unable to complete Workflow", err)
-	}
-	var greeting1 string
-	err = we1.Get(context.Background(), &greeting1)
-	if err != nil {
-		log.Fatalln("unable to get Workflow result", err)
-	}
-	printResults(greeting1, we1.GetID(), we1.GetRunID())
 
 }
 

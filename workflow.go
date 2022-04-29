@@ -7,25 +7,29 @@ import (
 )
 
 func GreetingWorkflow(ctx workflow.Context, name string) (string, error) {
+	//Step 1: Write "Hello World!"
 	options := workflow.ActivityOptions{
 		StartToCloseTimeout: time.Second * 5,
 	}
 	ctx = workflow.WithActivityOptions(ctx, options)
+	ctx1 := workflow.WithActivityOptions(ctx, options)
+	logger := workflow.GetLogger(ctx)
 	var result string
-	err := workflow.ExecuteActivity(ctx, ComposeGreeting, name).Get(ctx, &result)
-	return result, err
-}
-
-func MongoConnectionWorkflow(ctx2 workflow.Context) (string, error) {
-	//setup workflow properties
-	options1 := workflow.ActivityOptions{
-		StartToCloseTimeout: time.Second * 5,
+	err := workflow.ExecuteActivity(ctx1, ComposeGreeting, name).Get(ctx1, &result)
+	if err != nil {
+		logger.Info("Workflow completed with greeting writing failed", "Error", err)
+		return "", err
 	}
+	//return result, err
 
-	//execute the activity of creating a single document
-	ctx2 = workflow.WithActivityOptions(ctx2, options1)
-	var result string
-	err := workflow.ExecuteActivity(ctx2, MongoSingleInsert).Get(ctx2, &result)
-	return result, err
-
+	//Step 2: Execute creation of Single Document
+	ctx2 := workflow.WithActivityOptions(ctx, options)
+	var result1 string
+	err1 := workflow.ExecuteActivity(ctx2, MongoSingleInsert).Get(ctx2, &result1)
+	if err1 != nil {
+		logger.Info("Workflow completed with payment failed.", "Error", err1)
+		return "", err1
+	}
+	logger.Info("Workflow completed with printing greeting and writing document.")
+	return "COMPLETED", nil
 }

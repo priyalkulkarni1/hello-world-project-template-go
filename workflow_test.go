@@ -11,25 +11,15 @@ import (
 func Test_Workflow(t *testing.T) {
 	testSuite := &testsuite.WorkflowTestSuite{}
 	env := testSuite.NewTestWorkflowEnvironment()
+	testSuite1 := &testsuite.WorkflowTestSuite{}
+	env1 := testSuite1.NewTestWorkflowEnvironment()
 	// Mock activity implementation
 	env.OnActivity(ComposeGreeting, mock.Anything).Return("Hello World!", nil)
+	env1.OnActivity(MongoSingleInsert, mock.Anything).Return("Hello World!", nil)
 	env.ExecuteWorkflow(GreetingWorkflow, "World")
 	require.True(t, env.IsWorkflowCompleted())
 	require.NoError(t, env.GetWorkflowError())
 	var greeting string
 	require.NoError(t, env.GetWorkflowResult(&greeting))
-	require.Equal(t, "Hello World!", greeting)
-}
-
-func Test_Workflow1(t *testing.T) {
-	testSuite1 := &testsuite.WorkflowTestSuite{}
-	env1 := testSuite1.NewTestWorkflowEnvironment()
-	// Mock activity implementation
-	env1.OnActivity(MongoSingleInsert, mock.Anything).Return("Hello World!", nil)
-	env1.ExecuteWorkflow(MongoConnectionWorkflow)
-	require.True(t, env1.IsWorkflowCompleted())
-	require.NoError(t, env1.GetWorkflowError())
-	var greeting string
-	require.NoError(t, env1.GetWorkflowResult(&greeting))
 	require.Equal(t, "Hello World!", greeting)
 }
