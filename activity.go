@@ -14,8 +14,8 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-func ComposeGreeting(name string) (string, error) {
-	greeting := fmt.Sprintf("\n\nHello %s!\n\n", name)
+func ComposeGreeting(name string) error {
+	//greeting := fmt.Sprintf("\n\nHello %s!\n\n", name)
 	fmt.Printf("\n\nHello %s!\n\n", name)
 
 	//simulating expensive processing with a 30 second sleep
@@ -23,12 +23,15 @@ func ComposeGreeting(name string) (string, error) {
 	time.Sleep(30 * time.Second)
 	fmt.Printf("Current Unix Time: %v\n", time.Now().Unix())
 
-	return greeting, nil
+	// ERROR SIMULATION: Switch out return comments on the return statements to simulate an error
+	//return fmt.Errorf("\n\n message display did not occur due to an issue")
+
+	return nil
 }
 
 //connection to mongodb established and this activity will insert a single document
 
-func MongoSingleInsert() (string, error) {
+func MongoSingleInsert() error {
 
 	//start the mongodb connection before MongoSingleInsert
 	client, err := mongo.NewClient(options.Client().ApplyURI("mongodb://localhost:27017"))
@@ -63,5 +66,5 @@ func MongoSingleInsert() (string, error) {
 	// Document inserted with ID: ObjectID("...")
 	fmt.Printf("\n\nDocument inserted with ID: %s\n\n", fmt.Sprint(podcastResult.InsertedID))
 
-	return fmt.Sprint(podcastResult.InsertedID), nil
+	return nil
 }
