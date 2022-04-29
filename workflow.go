@@ -17,7 +17,7 @@ func GreetingWorkflow(ctx workflow.Context, name string) (string, error) {
 	var result string
 	err := workflow.ExecuteActivity(ctx1, ComposeGreeting, name).Get(ctx1, &result)
 	if err != nil {
-		logger.Info("Workflow completed with greeting writing failed", "Error", err)
+		logger.Info("\n\nWorkflow completed with greeting writing failed", "Error", err)
 		return "", err
 	}
 	//return result, err
@@ -27,9 +27,9 @@ func GreetingWorkflow(ctx workflow.Context, name string) (string, error) {
 	var result1 string
 	err1 := workflow.ExecuteActivity(ctx2, MongoSingleInsert).Get(ctx2, &result1)
 	if err1 != nil {
-		logger.Info("Workflow completed with payment failed.", "Error", err1)
+		logger.Info("\n\nWorkflow completed with payment failed.", "Error", err1)
 		return "", err1
 	}
-	logger.Info("Workflow completed with printing greeting and writing document.")
+	logger.Info("\n\n Workflow completed with printing greeting and writing document. \n\n")
 	return "COMPLETED", nil
 }
