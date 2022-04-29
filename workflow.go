@@ -9,7 +9,7 @@ import (
 func GreetingWorkflow(ctx workflow.Context, name string) (string, error) {
 	//Step 1: Write "Hello World!"
 	options := workflow.ActivityOptions{
-		StartToCloseTimeout: time.Second * 5,
+		StartToCloseTimeout: time.Second * 40,
 	}
 	ctx = workflow.WithActivityOptions(ctx, options)
 	ctx1 := workflow.WithActivityOptions(ctx, options)

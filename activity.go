@@ -17,6 +17,12 @@ import (
 func ComposeGreeting(name string) (string, error) {
 	greeting := fmt.Sprintf("\n\nHello %s!\n\n", name)
 	fmt.Printf("\n\nHello %s!\n\n", name)
+
+	//simulating expensive processing with a 30 second sleep
+	fmt.Printf("Current Unix Time: %v\n", time.Now().Unix())
+	time.Sleep(30 * time.Second)
+	fmt.Printf("Current Unix Time: %v\n", time.Now().Unix())
+
 	return greeting, nil
 }
 
@@ -29,7 +35,7 @@ func MongoSingleInsert() (string, error) {
 	if err != nil {
 		log.Fatal(err)
 	}
-	ctx1, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	ctx1, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 	err = client.Connect(ctx1)
 	if err != nil {
