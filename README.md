@@ -43,3 +43,4 @@ Unlike many modern applications that require complex leader election processes a
 
 ### Activity Error
 We simulate a bug in the Activity function. Please check [Activity.go](https://github.com/priyalkulkarni1/hello-world-project-template-go/blob/master/activity.go). Comments include simulated error.
+Save your changes and run the Worker. You will see the Worker complete the ComposeGreeting() Activity function, but error when it attempts the MongoSingleInsert() Activity function. The important thing to note here is that the Worker keeps retrying the MongoSingleInsert() function.
