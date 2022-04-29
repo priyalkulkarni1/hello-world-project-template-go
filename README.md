@@ -2,12 +2,14 @@
 
 ## Project Description
 This project explores a multi-activity temporal workflow. 
-The following two actions are performed:
+The following three actions are performed:
 
 1)A "Hello World/Hello String" statement is printed. 
 This was the starting point of understanding the functioning of the four main components of a Temporal Workflow. This simple demo has been made available by Temporal and can be found at [Temporal Go Hello World](https://github.com/temporalio/samples-go/tree/main/helloworld)
 
-2)An Insert Operation is performed to MongoDB collection.
+2) A sleep for 30 seconds is setup. This is a simulation for a long running activity. Two important parts of long activites are correctly setting up the [Start-To-Close Timeout](https://docs.temporal.io/docs/concepts/what-is-a-start-to-close-timeout) and [Activity Heartbeat](https://docs.temporal.io/docs/go/how-to-heartbeat-an-activity-in-go)
+
+3)An Insert Operation is performed to MongoDB collection.
 A new database called "QuickStart" is created. Then a collection called "Podcasts" is created. Finally, InsertOne operation is used to push demo data into a document.
 
 ## Steps to run Program
