@@ -15,7 +15,8 @@ import (
 )
 
 func ComposeGreeting(name string) (string, error) {
-	greeting := fmt.Sprintf("Hello %s!", name)
+	greeting := fmt.Sprintf("\n\nHello %s!\n\n", name)
+	fmt.Printf("\n\nHello %s!\n\n", name)
 	return greeting, nil
 }
 
@@ -54,7 +55,7 @@ func MongoSingleInsert() (string, error) {
 
 	// When you run this file, it should print:
 	// Document inserted with ID: ObjectID("...")
-	fmt.Printf("Document inserted with ID: %s\n", fmt.Sprint(podcastResult.InsertedID))
+	fmt.Printf("\n\nDocument inserted with ID: %s\n\n", fmt.Sprint(podcastResult.InsertedID))
 
 	return fmt.Sprint(podcastResult.InsertedID), nil
 }
